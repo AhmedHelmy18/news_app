@@ -1,12 +1,12 @@
 class ArticleModel {
+  final String? image;
+  final String title;
+  final String? subTitle;
 
   ArticleModel({
     required this.image ,
     required this.title,
-    required this.SubTitle,
-  });
+    required this.subTitle,
   
-  final String image;
-  final String title;
-  final String SubTitle;
+  });
 }
