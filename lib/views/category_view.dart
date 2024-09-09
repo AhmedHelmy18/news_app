@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app_ui_setup/widgets/news_list_view.dart';
 
 class CategoryView extends StatelessWidget {
   const CategoryView({super.key});
@@ -6,7 +7,11 @@ class CategoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('data')),
+      body: CustomScrollView(
+        slivers: [
+          
+        ],
+      ),
     );
   }
 }
