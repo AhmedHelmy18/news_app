@@ -1,37 +1,47 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../models/article_model.dart';
 import '../services/news_service.dart';
 import 'news_list_view.dart';
 
-class NewsListViewBuilder extends StatelessWidget {
+class NewsListViewBuilder extends StatefulWidget {
+  @override
+  State<NewsListViewBuilder> createState() => _NewsListViewBuilderState();
+}
+
+class _NewsListViewBuilderState extends State<NewsListViewBuilder> {
+  var future;
+
+  @override
+  void initState() {
+    super.initState();
+    future = NewsService().getNews();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<List<ArticleModel>>(
+      future: future,
       builder: (context, snapshot) {
-        return NewsListView(
-          articles: snapshot.data ?? [],
-        );
+        if (snapshot.hasData) {
+          return NewsListView(
+            articles: snapshot.data!,
+          );
+        } else if (snapshot.hasError) {
+          return SliverFillRemaining(
+            hasScrollBody: false,
+            child: Text('oops there was an error, try later'),
+          );
+        } else {
+          return const SliverFillRemaining(
+            hasScrollBody: false,
+            child: Center(
+              child: CircularProgressIndicator(
+                color: Colors.blue,
+              ),
+            ),
+          );
+        }
       },
-      future: NewsService().getNews(),
     );
-    // return isLoading
-    //     ? SliverFillRemaining(
-    //         hasScrollBody: false,
-    //         child: Center(
-    //           child: CircularProgressIndicator(
-    //             color: Colors.blue,
-    //           ),
-    //         ),
-    //       )
-    //     : articles.isNotEmpty
-    //         ? NewsListView(
-    //             articles: articles,
-    //           )
-    //         : SliverFillRemaining(
-    //             hasScrollBody: false,
-    //             child: Text('oops there was an error, try later'),
-    //           );
   }
 }
