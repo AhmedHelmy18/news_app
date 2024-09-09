@@ -4,6 +4,10 @@ import '../services/news_service.dart';
 import 'news_list_view.dart';
 
 class NewsListViewBuilder extends StatefulWidget {
+  NewsListViewBuilder({required this.category});
+
+  final String category;
+
   @override
   State<NewsListViewBuilder> createState() => _NewsListViewBuilderState();
 }
@@ -14,7 +18,7 @@ class _NewsListViewBuilderState extends State<NewsListViewBuilder> {
   @override
   void initState() {
     super.initState();
-    future = NewsService().getTopHeadlines(category: 'general');
+    future = NewsService().getTopHeadlines(category: widget.category);
   }
 
   @override
